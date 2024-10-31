@@ -10,6 +10,7 @@ This includes:
 - Monitoring
 
 ![DevSecOps](https://images.contentstack.io/v3/assets/blt36c2e63521272fdc/bltd88a7a2bbf7463c7/63e6a271babb166bc7931cde/DevSecOps_Loop.png)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFlyingFrares%2Ftaskflaw.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FFlyingFrares%2Ftaskflaw?ref=badge_shield)
 
 The Software used as the sandbox environment is a fork of the [tonimobin/cyber-security-base-2022](https://github.com/tonimobin/cyber-security-base-2022) repository.
 It is a simple note/task Web App with basic CRUD functionalities, written in Python using Django framework.
@@ -159,3 +160,7 @@ In this software the logging has been disabled as can be seen below. If there wa
 
 ###### Fix: 
 In this software you could simply turn the `disable_existing_loggers` from `True` to `False` and you'd get some basic logging. Building a robust logging system is a more complex task that should be kept in mind throughout the development life cycle. Some core concepts that should kept in mind are unmodifiability of the logs, the intruder should not be able to modify the logs. Time stamps are vital as well, because with their aid it's possible to re-construct events and thus understand the causes and effects of different actions that have happened in the system. 
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFlyingFrares%2Ftaskflaw.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FFlyingFrares%2Ftaskflaw?ref=badge_large)
