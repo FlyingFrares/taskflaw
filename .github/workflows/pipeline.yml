@@ -93,7 +93,7 @@ jobs:
           docker run --rm -d -p 8000:8000 --name django-server django-server
       - name: Wait for Django to Start
         run: sleep 10
-      - name: OWASP ZAP Baseline Scan
+      - name: OWASP ZAP Full Scan
         uses: zaproxy/action-full-scan@v0.12.0
         env:
           ZAP_AUTH_HEADER_VALUE: 'Basic dXNlcjpwYXNzd29yZAo='

@@ -1,0 +1,7 @@
+login
+logout
+register
+note
+note-create
+note-update
+note-delete

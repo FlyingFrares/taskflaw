@@ -45,25 +45,29 @@ jobs:
         run: |
           ffuf -u http://localhost:8000/FUZZ \
           -w /opt/SecLists/Discovery/Web-Content/raft-medium-directories.txt \
-          -recursion -recursion-depth 2 \
-          -debug-log debug.txt \
-          -o output.html -of html
+          -r -c -ac \
+          -o output.csv -of csv
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ffuf_artifacts
           path: |
-            debug.txt
-            output.html
+            output.csv
 
-      - name: Check for errors by counting lines in debug log
+      - name: Check for hidden or unprotected directories
         run: |
-          error_count=$(wc -l < debug.txt) 
-          if [ $error_count -gt 0 ]; then
-            echo "$error_count errors found"
-            exit $error_count
+          # Extract the first column from the CSV file
+          word_count=$(awk -F, '{print $1}' output.csv | 
+                       grep -Ev -f config/ffuf/urls.txt | 
+                       wc -w)
+          if [ "$word_count" -gt 0 ]; then
+            echo "Found hidden or unprotected directories."
+            exit 1
+          else
+            echo "No hidden or unprotected directories found."
           fi
+
 
       - name: Stop and remove Django container
         if: always()
