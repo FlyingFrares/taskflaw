@@ -1,3 +1,4 @@
+FUZZ
 login
 logout
 register
