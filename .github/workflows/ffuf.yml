@@ -63,7 +63,7 @@ jobs:
                        wc -w)
           if [ "$word_count" -gt 0 ]; then
             echo "Found hidden or unprotected directories."
-            exit 1
+            exit $word_count
           else
             echo "No hidden or unprotected directories found."
           fi
