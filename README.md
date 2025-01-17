@@ -69,9 +69,9 @@ This will limit the accessibility of the notes to authenticated users only.
 ## Flaw 2: [A02:2021 - Cryptographic Failures](https://owasp.org/Top10/A02_2021-Cryptographic_Failures/)
 
 ###### Problem:
-In this application, during login process, the user data is transported without proper encryption (via HTTP) and the data contained in the POST method (username and password) can be hijacked. When the hijacker looks at the data, they'll see the username and password in plain text. In the picture below you can see a Wireshark capture, where the user 'Joe' logs in to the application. His password is 'JoePassword'. Both the username and the password can be seen in plain text.
+In this application, during login process, the user data is transported without proper encryption (via HTTP) and the data contained in the POST method (username and password) can be hijacked. When the hijacker looks at the data, they'll see the username and password in plain text. In the picture below you can see a Wireshark capture, where the user 'User' logs in to the application. His password is 'UserPassword'. Both the username and the password can be seen in plain text.
 
-![Screenshot 2022-03-14 at 11 00 34](https://user-images.githubusercontent.com/85210617/158142284-f1317501-dd92-42b8-a77f-1f4b9958240e.png)
+![dump.png](images/dump.png)
 
 ###### Location: 
 <https://github.com/FlyingFrares/taskflaw/blob/9b39b7766426e158e779cb672cd3142eb792b128/noteproject/notes/templates/notes/login.html#L7-L14>
