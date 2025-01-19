@@ -140,7 +140,7 @@ In this app, the default settings are troublesome. The `SECRET_KEY` is left visi
 The app also seemingly has password validation, but on closer inspection it is lacking. For example common passwords are not prevented and this makes the system susceptible to brute-force scripts that try to guess the password. The admin user has the password `admin`, which is extremely bad and should not be allowed.
 
 ###### Location: 
-<https://github.com/FlyingFrares/taskflaw/blob/9b39b7766426e158e779cb672cd3142eb792b128/noteproject/noteproject/settings.py#L22-L26>
+<https://github.com/FlyingFrares/taskflaw/blob/3fb228c8eeb33b30884c01ecc047fb39b14d1ed7/noteproject/noteproject/settings.py#L22-L26>
 
 <https://github.com/FlyingFrares/taskflaw/blob/9b39b7766426e158e779cb672cd3142eb792b128/noteproject/noteproject/settings.py#L85-L98>
 
