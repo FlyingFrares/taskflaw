@@ -10,6 +10,7 @@ services:
     command:
       - --rolling-restart=true
       - --interval=120
+      - --cleanup=true
       - taskflaw-web
     restart: always
     volumes:
