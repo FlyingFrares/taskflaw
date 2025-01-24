@@ -25,10 +25,8 @@ These flaws are based on the [OWASP Top 10](https://owasp.org/Top10/) list and a
 2. Create a virtual environment for Python:
 	`python -m venv <venv>`
 3. Activate the virtual environment:
-	- On Windows:    
-	    `<venv>\Scripts\activate`
-	- On macOS/Linux:
-	    `source <venv>/bin/activate` 
+	- On Windows: `<venv>\Scripts\activate`
+	- On macOS/Linux: `source <venv>/bin/activate` 
 4. Install the packages from the `requirements.txt` file:
 	`pip install -r requirements.txt`
 
