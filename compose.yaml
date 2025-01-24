@@ -1,8 +1,17 @@
 services:
-  web: 
-    build:
-      context: noteproject
-      dockerfile: Dockerfile
-      target: base
-    ports: 
+  taskflaw:
+    image: flyingfrares/taskflaw
+    ports:
       - '8000:8000'
+    container_name: taskflaw-web
+
+  watchtower:
+    image: containrrr/watchtower
+    command:
+      - --rolling-restart=true
+      - --interval=5
+      - taskflaw-web
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    container_name: taskflaw-watchtower

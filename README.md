@@ -36,8 +36,21 @@ These flaws are based on the [OWASP Top 10](https://owasp.org/Top10/) list and a
 
 ### Building and running your application
 
-When you're ready, start your application by running:
-`docker compose up --build`.
+#### Locally
+You can build and run Taskflaw locally by following these steps:
+
+`cd noteproject`
+
+`docker build -t taskflaw .`
+
+`docker run -p 8000:8000 taskflaw`
+
+#### Docker Hub
+Alternatively, you can run the compose file to pull the image from Docker Hub:
+
+`docker compose up --build`
+
+Watchtower will automatically pull the latest image from Docker Hub and restart the container every time a new image is pushed.
 
 Your application will be available at http://localhost:8000.
 
