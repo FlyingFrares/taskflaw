@@ -9,7 +9,7 @@ services:
     image: containrrr/watchtower
     command:
       - --rolling-restart=true
-      - --interval=5
+      - --interval=120
       - taskflaw-web
     restart: always
     volumes:
