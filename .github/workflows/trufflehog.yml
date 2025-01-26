@@ -19,7 +19,7 @@ jobs:
     - name: TruffleHog OSS
       uses: trufflesecurity/trufflehog@v3.83.5
       with:
-        base: HEAD~100 # Scan last 100 commits
-      # base: "" # Scan all history
+        base: "" # Scan all history
+      # base: HEAD~100 # Scan last 100 commits
       # base: 37abccf0c3f204008f85578a49563fad690be9ae # Scan from a specific commit
-        head: main
+        head: ${{ github.sha }}
