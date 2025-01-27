@@ -20,9 +20,6 @@ jobs:
           docker build -f noteproject/Dockerfile -t django-server noteproject
           docker run -d -p 8000:8000 --name django-server django-server
 
-      - name: Wait for Django to Start
-        run: sleep 10
-
       - name: Install ffuf
         run: |
           sudo apt-get update
@@ -57,7 +54,6 @@ jobs:
 
       - name: Check for hidden or unprotected directories
         run: |
-          # Extract the first column from the CSV file
           word_count=$(awk -F, '{print $1}' output.csv | 
                        grep -Ev -f config/ffuf/urls.txt | 
                        wc -w)
@@ -67,10 +63,3 @@ jobs:
           else
             echo "No hidden or unprotected directories found."
           fi
-
-
-      - name: Stop and remove Django container
-        if: always()
-        run: |
-          docker stop django-server
-          docker rm django-server

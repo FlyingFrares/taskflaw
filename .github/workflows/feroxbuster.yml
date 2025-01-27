@@ -20,16 +20,7 @@ jobs:
           docker build -f noteproject/Dockerfile -t django-server noteproject
           docker run -d -p 8000:8000 --name django-server django-server
 
-      - name: Wait for Django to Start
-        run: sleep 10
-
       - name: Run Feroxbuster
         run: |
           docker run --rm --net=host epi052/feroxbuster \
           -u http://localhost:8000 --time-limit 10m -vv \
-
-      - name: Stop and remove Django container
-        if: always()
-        run: |
-          docker stop django-server
-          docker rm django-server
