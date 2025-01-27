@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+    <context>
+        <name>noteproject</name>
+        <desc/>
+        <inscope>true</inscope>
+        <incregexes>http://localhost:8000.*</incregexes>
+        <excregexes>.*note-delete.*</excregexes>
+        <tech>
+            <include>Db</include>
+            <include>Db.SQLite</include>
+            <include>Language</include>
+            <include>Language.Python</include>
+            <include>OS</include>
+            <include>OS.Linux</include>
+            <include>SCM</include>
+            <include>SCM.Git</include>
+        </tech>
+        <urlparser>
+            <class>org.zaproxy.zap.model.StandardParameterParser</class>
+            <config>{"kvps":"&amp;","kvs":"=","struct":[]}</config>
+        </urlparser>
+        <postparser>
+            <class>org.zaproxy.zap.model.StandardParameterParser</class>
+            <config>{"kvps":"&amp;","kvs":"=","struct":[]}</config>
+        </postparser>
+        <authentication>
+            <type>2</type>
+            <strategy>EACH_RESP</strategy>
+            <pollurl/>
+            <polldata/>
+            <pollheaders/>
+            <pollfreq>60</pollfreq>
+            <pollunits>REQUESTS</pollunits>
+            <loggedin>\Q&lt;button type="submit" class="text-button"&gt;Logout&lt;/button&gt;\E|\Q&lt;a href="/"&gt;&amp;#8592;&lt;/a&gt;\E|\QLocation: /\E</loggedin>
+            <loggedout>\Q&lt;h1&gt;Login&lt;/h1&gt;\E|\QLocation: /login/?next=.*\E</loggedout>
+            <form>
+                <loginurl>http://localhost:8000/login/</loginurl>
+                <loginbody>csrfmiddlewaretoken=0uITLr8JK8HuXL9aeBeZwIPLJhCUAQ3WoSwsEFmgkzlt9nM7Ud7Z0H12FwQEDdxz&amp;username={%username%}&amp;password={%password%}</loginbody>
+                <loginpageurl>http://localhost:8000/login/</loginpageurl>
+            </form>
+        </authentication>
+        <users>
+            <user>38;true;YWRtaW4=;2;YWRtaW4=~YWRtaW4=~</user>
+        </users>
+        <forceduser>38</forceduser>
+        <session>
+            <type>0</type>
+        </session>
+        <authorization>
+            <type>0</type>
+            <basic>
+                <header/>
+                <body/>
+                <logic>AND</logic>
+                <code>-1</code>
+            </basic>
+        </authorization>
+    </context>
+</configuration>
