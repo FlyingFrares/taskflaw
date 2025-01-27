@@ -8,7 +8,7 @@ on:
 
 jobs:
   secrets-scan:
-    name: Secrets Scanning
+    name: Secrets Scanning w/ GitGuardian
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -83,18 +83,13 @@ jobs:
       - name: Build and run Django container
         run: |
           docker build -f noteproject/Dockerfile -t django-server noteproject
-          docker run --rm -d -p 8000:8000 --name django-server django-server
-      - name: Wait for Django to Start
-        run: sleep 10
+          docker run -d -p 8000:8000 --name django-server django-server
       - name: OWASP ZAP Full Scan
         uses: zaproxy/action-full-scan@v0.12.0
-        env:
-          ZAP_AUTH_HEADER_VALUE: 'Basic dXNlcjpwYXNzd29yZAo='
-          ZAP_AUTH_HEADER: 'Authorization'
         with:
           token: ${{ secrets.REPO_TOKEN }}
           target: 'http://localhost:8000'
-          cmd_options: '-a'
+          cmd_options: '-n /zap/wrk/config/zap/noteproject-barebones.context -U admin --hook /zap/wrk/config/zap/myhook.py'
           fail_action: 'true'
         continue-on-error: false
 
@@ -109,8 +104,6 @@ jobs:
         run: |
           docker build -f noteproject/Dockerfile -t django-server noteproject
           docker run -d -p 8000:8000 --name django-server django-server
-      - name: Wait for Django to Start
-        run: sleep 10
       - name: Install ffuf
         run: |
           sudo apt-get update
@@ -124,22 +117,24 @@ jobs:
         run: |
           ffuf -u http://localhost:8000/FUZZ \
           -w /opt/SecLists/Discovery/Web-Content/raft-medium-directories.txt \
-          -recursion -recursion-depth 2 \
-          -debug-log debug.txt \
-          -o output.html -of html
+          -r -c -ac \
+          -o output.csv -of csv
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ffuf_artifacts
           path: |
-            debug.txt
-            output.html
-      - name: Check for errors by counting lines in debug log
+            output.csv
+      - name: Check for hidden or unprotected directories
         run: |
-          error_count=$(wc -l < debug.txt) 
-          if [ $error_count -gt 0 ]; then
-            echo "$error_count errors found"
-            exit $error_count
+          word_count=$(awk -F, '{print $1}' output.csv | 
+                       grep -Ev -f config/ffuf/urls.txt | 
+                       wc -w)
+          if [ "$word_count" -gt 0 ]; then
+            echo "Found hidden or unprotected directories."
+            exit $word_count
+          else
+            echo "No hidden or unprotected directories found."
           fi
         continue-on-error: false
 
