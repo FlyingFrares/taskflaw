@@ -20,22 +20,10 @@ jobs:
           docker build -f noteproject/Dockerfile -t django-server noteproject
           docker run -d -p 8000:8000 --name django-server django-server
 
-      - name: Wait for Django to Start
-        run: sleep 10
-
       - name: OWASP ZAP Full Scan
         uses: zaproxy/action-full-scan@v0.12.0
-        env:
-          ZAP_AUTH_HEADER_VALUE: 'Basic dXNlcjpwYXNzd29yZAo=' # base64 encoded user:password
-          ZAP_AUTH_HEADER: 'Authorization'
         with:
           token: ${{ secrets.REPO_TOKEN }}
           target: 'http://localhost:8000'
-          cmd_options: '-a'
+          cmd_options: '-n /zap/wrk/config/zap/noteproject-barebones.context -U admin --hook /zap/wrk/config/zap/myhook.py'
           fail_action: 'true'
-
-      - name: Stop and remove Django container
-        if: always()
-        run: |
-          docker stop django-server
-          docker rm django-server
