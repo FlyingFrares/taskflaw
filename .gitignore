@@ -59,3 +59,6 @@ venv.bak/
 
 # act Workflows
 .github/workflows/act*
+
+# Scans
+scans/

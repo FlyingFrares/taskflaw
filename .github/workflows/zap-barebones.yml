@@ -1,4 +1,4 @@
-name: DAST with Zap Full Scan
+name: DAST with Zap Full Scan (barebones)
 
 on:
   push:
@@ -25,5 +25,5 @@ jobs:
         with:
           token: ${{ secrets.REPO_TOKEN }}
           target: 'http://localhost:8000'
-          cmd_options: '-n /zap/wrk/config/zap/noteproject.context -U admin --hook /zap/wrk/config/zap/myhook.py'
+          cmd_options: '-n /zap/wrk/config/zap/noteproject-barebones.context -U admin --hook /zap/wrk/config/zap/myhook.py'
           fail_action: 'true'
