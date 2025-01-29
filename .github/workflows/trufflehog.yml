@@ -22,4 +22,4 @@ jobs:
         base: "" # Scan all history
       # base: HEAD~100 # Scan last 100 commits
       # base: 37abccf0c3f204008f85578a49563fad690be9ae # Scan from a specific commit
-        head: ${{ github.sha }}
+        head: main
