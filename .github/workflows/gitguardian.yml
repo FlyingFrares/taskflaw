@@ -10,16 +10,14 @@ jobs:
     name: GitGuardian scan
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # fetch all history so multiple commits can be scanned
       - name: GitGuardian scan
         uses: GitGuardian/ggshield/actions/secret@v1.33.0
         env:
-          #GITHUB_PUSH_BEFORE_SHA: ${{ github.event.before }} #SHA of the most recent commit on ref before the push.
-          GITHUB_PUSH_BEFORE_SHA: '7e644b68d9e3b055f46ea4c5d7f6e8d6519093e3' # SHA of the first commit
-          GITHUB_PUSH_BASE_SHA: ${{ github.event.head }} #SHA of the most recent commit on ref after the push.
-          GITHUB_PULL_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          GITHUB_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          GITHUB_PUSH_BEFORE_SHA: '9b39b7766426e158e779cb672cd3142eb792b128' # SHA of the first commit to scan
+          GITHUB_PUSH_BASE_SHA: ${{ github.sha }} #SHA that triggered the workflow
+          GITHUB_DEFAULT_BRANCH: 'main'
           GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
