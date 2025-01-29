@@ -1,0 +1,29 @@
+name: DAST with Zap Full Scan (no hook)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch: {}
+
+jobs:
+  dast-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build and run Django container
+        run: |
+          docker build -f noteproject/Dockerfile -t django-server noteproject
+          docker run -d -p 8000:8000 --name django-server django-server
+
+      - name: OWASP ZAP Full Scan
+        uses: zaproxy/action-full-scan@v0.12.0
+        with:
+          token: ${{ secrets.REPO_TOKEN }}
+          target: 'http://localhost:8000'
+          cmd_options: '-n /zap/wrk/config/zap/noteproject-barebones-nologout.context -U admin'
+          fail_action: 'true'
