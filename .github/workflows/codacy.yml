@@ -14,11 +14,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action@master
+        uses: codacy/codacy-analysis-cli-action@v4.4.5
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           upload: true
