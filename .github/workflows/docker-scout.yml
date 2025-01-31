@@ -23,5 +23,5 @@ jobs:
           dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}
           command: quickview,cves,recommendations
           # fail the build if any critical or high severity vulnerabilities are found
-          only-severities: critical,high
+          # only-severities: critical,high
           exit-code: true

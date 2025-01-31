@@ -21,6 +21,6 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: flyin/taskflaw-test
-          args: --severity-threshold=high
+          args: --severity-threshold=low
         # Send snapshot directly to app.snyk.io
         # command: monitor

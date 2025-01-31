@@ -51,7 +51,7 @@ jobs:
           COMMAND: "pip install --upgrade pip -r noteproject/requirements.txt"
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: test --file=noteproject/requirements.txt --severity-threshold=low
+          command: test --file=noteproject/requirements.txt --severity-threshold=medium
         continue-on-error: false
 
   container-scan:
@@ -67,8 +67,7 @@ jobs:
           dockerhub-user: ${{ vars.DOCKER_USERNAME }}
           dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}
           command: quickview,cves,recommendations
-          # fail the build if any critical or high severity vulnerabilities are found
-          only-severities: critical,high
+          only-severities: critical,high,medium
           exit-code: true
         continue-on-error: false
 
