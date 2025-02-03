@@ -6,3 +6,4 @@ note
 note-create
 note-update
 note-delete
+password_reset
