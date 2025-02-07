@@ -174,15 +174,3 @@ The application uses an outdated version of Django, which may contain known vuln
 
 ###### Fix: 
 Dependency-check can currently be used to scan software to identify the use of known vulnerable components.
-
-
-## Flaw 8: [A09:2021 - Security Logging and Monitoring Failures](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/)
-
-###### Problem: 
-In this software the logging has been disabled as can be seen below. If there was an attack such as the one described in Flaw #1 (a brute-force script that guesses passwords), there would be thousands if not hunders of thousands of logging attempts. When there is no logging, the system administrator is not aware of these logging attempts. If they became aware of these attempts, they'd know that they are under an attack and could then act accordingly. 
-
-###### Location: 
-<https://github.com/FlyingFrares/taskflaw/blob/9b39b7766426e158e779cb672cd3142eb792b128/noteproject/noteproject/settings.py#L124-L136>
-
-###### Fix: 
-In this software you could simply turn the `disable_existing_loggers` from `True` to `False` and you'd get some basic logging. Building a robust logging system is a more complex task that should be kept in mind throughout the development life cycle. Some core concepts that should kept in mind are unmodifiability of the logs, the intruder should not be able to modify the logs. Time stamps are vital as well, because with their aid it's possible to re-construct events and thus understand the causes and effects of different actions that have happened in the system. 

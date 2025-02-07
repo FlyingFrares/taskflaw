@@ -23,7 +23,7 @@ jobs:
         GITHUB_PUSH_BASE_SHA: ${{ github.event.head }} #SHA of the most recent commit on ref after the push.
         GITHUB_DEFAULT_BRANCH: 'main'
         GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
-      continue-on-error: true
+      continue-on-error: false
 
   sast-scan:
     name: Semgrep
@@ -38,7 +38,7 @@ jobs:
       - run: semgrep ci
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-        continue-on-error: true
+        continue-on-error: false
 
   sca-scan:
     name: Snyk
@@ -52,7 +52,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test --file=noteproject/requirements.txt --severity-threshold=medium
-        continue-on-error: true
+        continue-on-error: false
 
   container-scan:
     name: Docker Scout
@@ -69,7 +69,7 @@ jobs:
           command: quickview,cves,recommendations
           only-severities: critical,high,medium
           exit-code: true
-        continue-on-error: true
+        continue-on-error: false
 
   dast-scan:
     name: ZAP
@@ -89,7 +89,7 @@ jobs:
           target: 'http://localhost:8000'
           cmd_options: '-n /zap/wrk/config/zap/noteproject-barebones.context -U admin --hook /zap/wrk/config/zap/myhook.py'
           fail_action: 'true'
-        continue-on-error: true
+        continue-on-error: false
 
   fuzzing:
     name: FFUF
@@ -115,14 +115,13 @@ jobs:
         run: |
           ffuf -u http://localhost:8000/FUZZ \
           -w /opt/SecLists/Discovery/Web-Content/raft-medium-directories.txt \
-          -r -c -ac \
+          -r -ac \
           -o output.csv -of csv
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ffuf_artifacts
-          path: |
-            output.csv
+          path: output.csv
       - name: Check for hidden or unprotected directories
         run: |
           word_count=$(awk -F, '{print $1}' output.csv | 
@@ -134,7 +133,7 @@ jobs:
           else
             echo "No hidden or unprotected directories found."
           fi
-        continue-on-error: true
+        continue-on-error: false
 
   release:
     name: Docker Hub

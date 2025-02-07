@@ -42,7 +42,7 @@ jobs:
         run: |
           ffuf -u http://localhost:8000/FUZZ \
           -w /opt/SecLists/Discovery/Web-Content/raft-medium-directories.txt \
-          -r -c -ac \
+          -r -ac \
           -o output.csv -of csv
 
       - name: Upload artifacts
